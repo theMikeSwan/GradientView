@@ -10,5 +10,5 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-	@IBOutlet var window: UIWindow!
+	@IBOutlet var window: UIWindow?
 }

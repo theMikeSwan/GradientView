@@ -58,7 +58,7 @@ public class GradientView: UIView {
 	/// Automatically dim gradient colors when prompted by the system (i.e. when an alert is shown).
 	///
 	/// The default is `true`.
-	public var automaticallyDims: Bool = true
+	@IBInspectable public var automaticallyDims: Bool = true
 
 	/// An optional array of `CGFloat`s defining the location of each gradient stop.
 	///
@@ -127,6 +127,23 @@ public class GradientView: UIView {
 			setNeedsDisplay()
 		}
 	}
+    
+    /// The radius of the inner circle of the gradient. The default is 0.
+    @IBInspectable
+    public var startRadius: CGFloat = 0.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    // TODO: Figure out how to make the default for this be (min(bounds.size.width, bounds.size.height) / 2) rather than a hard coded value.
+    /// The radius of the end circle. The default is currently 100.
+    @IBInspectable
+    public var endRadius: CGFloat = 100.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
 
 	// MARK: - UIView
@@ -144,8 +161,8 @@ public class GradientView: UIView {
 				let endPoint = direction == .Vertical ? CGPoint(x: 0, y: size.height) : CGPoint(x: size.width, y: 0)
 				CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, options)
 			} else {
-				let center = CGPoint(x: bounds.midX, y: bounds.midY)
-				CGContextDrawRadialGradient(context, gradient, center, 0, center, min(size.width, size.height) / 2, options)
+                let center = CGPoint(x: bounds.midX, y: bounds.midY)
+				CGContextDrawRadialGradient(context, gradient, center, startRadius, center, endRadius, options)
 			}
 		}
 
